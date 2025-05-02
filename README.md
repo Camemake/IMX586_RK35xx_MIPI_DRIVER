@@ -61,7 +61,6 @@ imx586-rk35xx-driver/
 ├── imx586-rk35xx.dtsi
 ├── Makefile, Kconfig
 ├── dkms.conf, setup.sh
-└── LICENSE
 ```
 
 ## TODO
@@ -69,4 +68,3 @@ imx586-rk35xx-driver/
 - Add exposure / gain controls
 - Optionally integrate AF VCM
 
-© 2025 YOUR NAME — GPL‑2.0‑only
