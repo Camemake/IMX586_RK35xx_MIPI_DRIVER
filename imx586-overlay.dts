@@ -1,0 +1,48 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "brcm,bcm2712";
+
+	fragment@0 {
+		target = <&rp1_csi0>;
+		__overlay__ {
+			status = "okay";
+			brcm,lanes = <4>;
+		};
+	};
+
+	fragment@1 {
+		target-path = "/";
+		__overlay__ {
+			imx586: camera@1a {
+				compatible = "sony,imx586";
+				reg = <0x1a>;
+				reset-gpios = <&gpio 5 GPIO_ACTIVE_LOW>;
+				clocks = <&clocks RP1_CLOCK_CAM0>;
+				clock-frequency = <37125000>;
+
+				port {
+					imx586_to_csi0_ep: endpoint {
+						clock-lanes = <0>;
+						data-lanes  = <1 2 3 4>;
+						link-frequencies = /bits/ 64 <445500000>;
+						remote-endpoint = <&csi0_ep>;
+					};
+				};
+			};
+		};
+	};
+
+	fragment@2 {
+		target = <&csi0_ep>;
+		__overlay__ {
+			data-lanes = <1 2 3 4>;
+		};
+	};
+
+	__overrides__ {
+		cam0 = <&imx586_to_csi0_ep>, "remote-endpoint:0=",<&csi0_ep>;
+		4lane = <&rp1_csi0>, "brcm,lanes:0=4";
+	};
+};
